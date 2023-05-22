@@ -1,2 +1,3 @@
 # nRF24L01-Module-Driver
 一个nRF24L01的驱动代码，使用的单片机为stm32
+代码测试使用的单片机为stm32f103c8t6的SPI2口，需要其他的请自行更改
