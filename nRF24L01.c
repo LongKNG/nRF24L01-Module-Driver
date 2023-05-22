@@ -28,15 +28,10 @@ void NRF24L01_Init(void)
 							 |NRF_CSN_GPIO_CLK
 							 |NRF_CE_GPIO_CLK,ENABLE);
 
-//	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1, ENABLE);//使能SPI1时钟
-	
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);//使能SPI2时钟
-	
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1, ENABLE);//使能SPI1时钟
+		
 	/*配置SPI1 SPI_NRF_SPI的 SCK,MISO,MOSI引脚，GPIOA^5,GPIOA^6,GPIOA^7 */
-//	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_7;
-
-	/*配置SPI2 SPI_NRF_SPI的 SCK,MISO,MOSI引脚，GPIOB^13,GPIOB^14,GPIOA^15 */
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_7;
 
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP; 		//复用功能
@@ -72,12 +67,9 @@ void NRF24L01_Init(void)
 	SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;  			//高位在前
 	SPI_InitStructure.SPI_CRCPolynomial = 7;
 	
-//	SPI_Init(SPI1, &SPI_InitStructure);
+	SPI_Init(SPI1, &SPI_InitStructure);
 	
-	SPI_Init(SPI2, &SPI_InitStructure);
-	
-//	SPI_Cmd(SPI1, ENABLE);		//使能SPI1
-	SPI_Cmd(SPI2, ENABLE);		//使能SPI2
+	SPI_Cmd(SPI1, ENABLE);		//使能SPI1
 }
 
 /*————————————————————————————————————
@@ -89,13 +81,13 @@ void NRF24L01_Init(void)
 uint8_t NRF24L01_RW(uint8_t dat)
 {  	
 
-	while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);//当 SPI发送缓冲器非空时等待
+	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET);//当 SPI发送缓冲器非空时等待
 
-	SPI_I2S_SendData(SPI2, dat); //通过 SPI2发送一字节数据		
+	SPI_I2S_SendData(SPI1, dat); //通过 SPI1发送一字节数据		
 
-	while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == RESET);//当SPI接收缓冲器为空时,等待
+	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_RXNE) == RESET);//当SPI接收缓冲器为空时,等待
 
-	return SPI_I2S_ReceiveData(SPI2);//返回从SPI总线读取的字节
+	return SPI_I2S_ReceiveData(SPI1);//返回从SPI总线读取的字节
 }
 
 /*————————————————————————————————————
