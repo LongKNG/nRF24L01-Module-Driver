@@ -3,8 +3,8 @@
 
 #include "stm32f10x.h"
 
-#define TX_ADR_WIDTH 	5  	//发射地址宽度
-#define TX_PLOAD_WIDTH  32   //发射数据通道有效数据宽度0~32Byte 
+#define TX_ADR_WIDTH 	5  	    //发射地址宽度
+#define TX_PLOAD_WIDTH  32    //发射数据通道有效数据宽度0~32Byte 
 
 #define RX_ADR_WIDTH    5
 #define RX_PLOAD_WIDTH  32 
@@ -60,29 +60,28 @@
 #define RX_DR   	    0x40  //RT接收到数据中断标志位 0110 0000
 /*————————————————————————————————————————————————————————*/
 
-/*——————————CSN、CE、IRQ定义——————————*/
+/*——————————CSN,CE,IRQ定义——————————*/
 //stm32f103vet6 CSN PC6
-//stm32f103c8t6 CSN PB12
-#define NRF_CSN_GPIO_PORT    GPIOB
-#define NRF_CSN_PIN          GPIO_Pin_12
-#define NRF_CSN_GPIO_CLK     RCC_APB2Periph_GPIOB
+
+#define NRF_CSN_GPIO_PORT    GPIOC
+#define NRF_CSN_PIN          GPIO_Pin_6
+#define NRF_CSN_GPIO_CLK     RCC_APB2Periph_GPIOC
 
 //stm32f103vet6 CE PC5
-//stm32f103c8t6 CE PB0
-#define NRF_CE_GPIO_PORT    GPIOA
-#define NRF_CE_PIN          GPIO_Pin_15
-#define NRF_CE_GPIO_CLK     RCC_APB2Periph_GPIOA
+#define NRF_CE_GPIO_PORT    GPIOC
+#define NRF_CE_PIN          GPIO_Pin_5
+#define NRF_CE_GPIO_CLK     RCC_APB2Periph_GPIOC
+
 //stm32f103vet6 IRQ PC4
-//stm32f103c8t6 IRQ PC13
-#define NRF_IRQ_GPIO_PORT    GPIOB
-#define NRF_IRQ_PIN          GPIO_Pin_11
+#define NRF_IRQ_GPIO_PORT    GPIOC
+#define NRF_IRQ_PIN          GPIO_Pin_4
 #define NRF_IRQ_GPIO_CLK     RCC_APB2Periph_GPIOC
 
 #define NRF_CSN_HIGH()      GPIO_SetBits(NRF_CSN_GPIO_PORT, NRF_CSN_PIN)
-#define NRF_CSN_LOW()       GPIO_ResetBits(NRF_CSN_GPIO_PORT, NRF_CSN_PIN)		        //csn置低
+#define NRF_CSN_LOW()       GPIO_ResetBits(NRF_CSN_GPIO_PORT, NRF_CSN_PIN)		      //csn置低
 #define NRF_CE_HIGH()	      GPIO_SetBits(NRF_CE_GPIO_PORT,NRF_CE_PIN)
-#define NRF_CE_LOW()	      GPIO_ResetBits(NRF_CE_GPIO_PORT,NRF_CE_PIN)			      //CE置低
-#define NRF_Read_IRQ()		  GPIO_ReadInputDataBit(NRF_IRQ_GPIO_PORT, NRF_IRQ_PIN)  //中断引脚
+#define NRF_CE_LOW()	      GPIO_ResetBits(NRF_CE_GPIO_PORT,NRF_CE_PIN)			        //CE置低
+#define NRF_Read_IRQ()		  GPIO_ReadInputDataBit(NRF_IRQ_GPIO_PORT, NRF_IRQ_PIN)   //中断引脚
 /*————————————————————————————————————————————————————————*/
 
 
