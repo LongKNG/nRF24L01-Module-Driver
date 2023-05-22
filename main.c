@@ -2,6 +2,7 @@
 
 #include "nRF24L01.h"
 #include "OLED.h"       //OLED用于显示调试，也可以用串口       
+#include "Delay.h"
 
 uint8_t status;         //用于判断接收/发送状态的标志位
 uint8_t Mode = 1;       //用于模式选择，1为接收模式，2为发送模式
@@ -44,7 +45,7 @@ int main()
             }
         }
         
-        Delay_s(1);
+        Delay_ms(1000);
         if(Mode == 2)
         {
             status = NRF24L01_Tx_Dat(Tx_Buf)
